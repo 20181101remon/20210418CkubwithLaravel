@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\ClubInfo;
+// use App\Models\club_info;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class ClubinfoController extends Controller
@@ -14,7 +15,11 @@ class ClubinfoController extends Controller
     public function index()
     {
         //
-        $club=ClubInfo::all();
+        // $club=club_info::all();
+        $club = DB::table('club_info')
+        ->leftJoin('club_semester', 'club_info.club_id', '=', 'club_semester.club_id')
+        ->get();
+
         return view('club.club')->with('clubInfo',$club);
         // 傳過去時要使用的變數名稱 變數
     }
@@ -26,8 +31,8 @@ class ClubinfoController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        return ClubInfo::create($request->all());
+        
+        return  DB::table('club_info')::create($request->all());
     }
     /**
      * Display the specified resource.

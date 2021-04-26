@@ -10,6 +10,7 @@
     @if(count($clubInfo)>0)
         @foreach($clubInfo as $p)
             <h3>{{$p->club_name}}</h3>
+            <h3>{{$p->club_fee}}</h3>
         @endforeach
     @else
         <p>Error</p>
