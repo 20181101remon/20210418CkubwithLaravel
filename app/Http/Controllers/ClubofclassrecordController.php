@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class ClubinfoController extends Controller
+class ClubofclassrecordController extends Controller
 {
-    private $table1='club_info';
+    private $table1='club_classrecord';
     private $table2='club_semester';
+    private $table3='club_info';
+    private $table4='classrecord_pic';
     /**
      * Display a listing of the resource.
      *
@@ -16,13 +18,16 @@ class ClubinfoController extends Controller
      */
     public function index()
     {
-        //
+        //公開的
         // $club=club_info::all();
         $club = DB::table($this->table1)
-        ->leftJoin($this->table2, $this->table1.'.club_id', '=',  $this->table2.'.club_id')
+        ->leftJoin($this->table2, $this->table1.'.club_semester', '=',  $this->table2.'.club_semester')
+        ->leftJoin($this->table3, $this->table2.'.club_id', '=',  $this->table3.'.club_id')
+        ->leftJoin($this->table4, $this->table1.'.flow_of_classrecord', '=',  $this->table4.'.flow_of_classrecord')
+        ->where('PLC','1')
+        ->groupBy($this->table1.'.flow_of_classrecord')
         ->get();
         return $club;
-        // return view('club.club')->with('clubInfo',$club);
         // 傳過去時要使用的變數名稱 變數
     }
     /**
@@ -42,12 +47,32 @@ class ClubinfoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showALL($id)
     {
         //
         $club = DB::table($this->table1)
-        // ->where('club_name', 'like', '%'.$id.'%')
+        ->leftJoin($this->table2, $this->table1.'.club_semester', '=',  $this->table2.'.club_semester')
+        ->leftJoin($this->table3, $this->table2.'.club_id', '=',  $this->table3.'.club_id')
+        ->leftJoin($this->table4, $this->table1.'.flow_of_classrecord', '=',  $this->table4.'.flow_of_classrecord')
         ->where('club_name',$id)
+        ->get();
+        return $club;
+    }
+
+        /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id,$date)
+    {
+        //
+        $club = DB::table($this->table1)
+        ->leftJoin($this->table2, $this->table1.'.club_semester', '=',  $this->table2.'.club_semester')
+        ->leftJoin($this->table3, $this->table2.'.club_id', '=',  $this->table3.'.club_id')
+        ->where('club_name', $id)
+        ->Where('date', $date)
         ->get();
         return $club;
     }
@@ -63,7 +88,7 @@ class ClubinfoController extends Controller
     {
         //
         $club=DB::table($this->table1)
-        ->where('club_name',$id)
+        ->where('flow_of_classrecord',$id)
         ->update($request->all());
 
         return $club;
@@ -78,7 +103,7 @@ class ClubinfoController extends Controller
     public function destroy($id)
     {
         //
-        $club=DB::table($this->table1)->where('club_name',$id)->delete();
+        $club=DB::table($this->table1)->where('flow_of_classrecord',$id)->delete();
         return $club;
     }
 }
