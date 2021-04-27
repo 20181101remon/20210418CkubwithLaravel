@@ -8,6 +8,12 @@ use App\Http\Controllers\CluboffeedbackController;
 use App\Http\Controllers\ClubactivityapplyController;
 use App\Http\Controllers\ClubactivityresultsController;
 use App\Http\Controllers\ClubofnewsController;
+use App\Http\Controllers\ActivitypicController;
+use App\Http\Controllers\ClassrecordpicController;
+use App\Http\Controllers\FeedbacktypeController;
+use App\Http\Controllers\NewstypeController;
+use App\Http\Controllers\SemesterController;
+use App\Http\Controllers\ClubsemesterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -65,6 +71,7 @@ Route::post('/activityresults',[ClubactivityresultsController::class,'store']);
 Route::put('/activityresults/{id}',[ClubactivityresultsController::class,'update']);
 Route::delete('/activityresults/{id}',[ClubactivityresultsController::class,'destroy']);
 
+// 最新消息
 Route::get('/clubOfnews',[ClubofnewsController::class,'index']);
 Route::get('/clubOfnews/{id}',[ClubofnewsController::class,'showALL']);
 Route::get('/clubOfnews/{id}/{date}',[ClubofnewsController::class,'show']);
@@ -72,19 +79,43 @@ Route::post('/clubOfnews',[ClubofnewsController::class,'store']);
 Route::put('/clubOfnews/{id}',[ClubofnewsController::class,'update']);
 Route::delete('/clubOfnews/{id}',[ClubofnewsController::class,'destroy']);
 
-    // return ClubInfo::create([
-    //     'club_name'=>'測試開發',
-    //     'club_type'=>'測試性',
-    //     'club_website'=>'',
-    //     'club_purpose'=>'方便測試與開發CLUB SHOW網頁而建立',
-    //     'club_icon'=>'',
-    //     'club_introduce'=>'為了三學分出賣靈魂的瘋子們',
-    //     'club_cover'=>'',
-    //     'club_place'=>'無所不在',
-    //     'club_time'=>'無時不有',
-    //     'source_of_funding'=>'無',
-    // ]);
+// 活動成果照
+Route::get('/activitypic/{id}/{date}',[ActivitypicController::class,'show']);
+Route::post('/activitypic',[ActivitypicController::class,'store']);
+Route::put('/activitypic/{id}',[ActivitypicController::class,'update']);
+Route::delete('/activitypic/{id}',[ActivitypicController::class,'destroy']);
 
+// 社課照片
+Route::get('/classrecordpic/{id}/{date}',[ClassrecordpicController::class,'show']);
+Route::post('/classrecordpic',[ClassrecordpicController::class,'store']);
+Route::put('/classrecordpic/{id}',[ClassrecordpicController::class,'update']);
+Route::delete('/classrecordpic/{id}',[ClassrecordpicController::class,'destroy']);
+
+// 反饋類型
+Route::get('/feedbacktype',[FeedbacktypeController::class,'index']);
+Route::post('/feedbacktype',[FeedbacktypeController::class,'store']);
+Route::put('/feedbacktype/{id}',[FeedbacktypeController::class,'update']);
+Route::delete('/feedbacktype/{id}',[FeedbacktypeController::class,'destroy']);
+
+
+// 新聞類型
+Route::get('/newstype',[NewstypeController::class,'index']);
+Route::post('/newstype',[NewstypeController::class,'store']);
+Route::put('/newstype/{id}',[NewstypeController::class,'update']);
+Route::delete('/newstype/{id}',[NewstypeController::class,'destroy']);
+
+
+// 學期類型
+Route::get('/semester',[SemesterController::class,'index']);
+Route::post('/semester',[SemesterController::class,'store']);
+Route::put('/semester/{id}',[SemesterController::class,'update']);
+Route::delete('/semester/{id}',[SemesterController::class,'destroy']);
+
+
+// 社團學期
+Route::post('/clubsemester',[ClubsemesterController::class,'store']);
+Route::put('/clubsemester/{id}',[ClubsemesterController::class,'update']);
+Route::delete('/clubsemester/{id}',[ClubsemesterController::class,'destroy']);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
