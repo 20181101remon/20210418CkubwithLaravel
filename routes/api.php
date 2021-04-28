@@ -14,6 +14,7 @@ use App\Http\Controllers\FeedbacktypeController;
 use App\Http\Controllers\NewstypeController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\ClubsemesterController;
+use App\Http\Controllers\NewsattendfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -117,6 +118,13 @@ Route::post('/clubsemester',[ClubsemesterController::class,'store']);
 Route::put('/clubsemester/{id}',[ClubsemesterController::class,'update']);
 Route::delete('/clubsemester/{id}',[ClubsemesterController::class,'destroy']);
 
+
+// 消息附加檔案
+Route::get('/newattendpic/{id}/{date}',[NewsattendfileController::class,'showpic']);
+Route::get('/newattendfile/{id}/{date}',[NewsattendfileController::class,'showfile']);
+Route::post('/newattendfile',[NewsattendfileController::class,'store']);
+Route::put('/newattendfile/{id}',[NewsattendfileController::class,'update']);
+Route::delete('/newattendfile/{id}',[NewsattendfileController::class,'destroy']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
