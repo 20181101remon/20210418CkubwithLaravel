@@ -15,6 +15,9 @@ use App\Http\Controllers\NewstypeController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\ClubsemesterController;
 use App\Http\Controllers\NewsattendfileController;
+use App\Http\Controllers\OverviewclubController;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\MyclubsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,19 +31,22 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+// 社團基本資訊
 Route::get('/clubs',[ClubinfoController::class,'index']);
 Route::get('/clubs/{id}', [ClubinfoController::class,'show']);
 Route::post('/clubs',[ClubinfoController::class,'store']);
 Route::put('/clubs/{id}',[ClubinfoController::class,'update']);
 Route::delete('/clubs/{id}',[ClubinfoController::class,'destroy']);
 
+// 社團計畫
 // Route::get('/clubOfplan',[ClubofplanController::class,'index']);
 Route::get('/clubOfplan/{id}',[ClubofplanController::class,'show']);
 Route::post('/clubOfplan',[ClubofplanController::class,'store']);
 Route::put('/clubOfplan/{id}',[ClubofplanController::class,'update']);
 Route::delete('/clubOfplan/{id}',[ClubofplanController::class,'destroy']);
 
-
+// 社客紀錄
 Route::get('/clubOfclassrecord',[ClubofclassrecordController::class,'index']);
 Route::get('/clubOfclassrecord/{id}',[ClubofclassrecordController::class,'showALL']);
 Route::get('/clubOfclassrecord/{id}/{date}',[ClubofclassrecordController::class,'show']);
@@ -48,23 +54,27 @@ Route::post('/clubOfclassrecord',[ClubofclassrecordController::class,'store']);
 Route::put('/clubOfclassrecord/{id}',[ClubofclassrecordController::class,'update']);
 Route::delete('/clubOfclassrecord/{id}',[ClubofclassrecordController::class,'destroy']);
 
+// 財務表
 Route::get('/financialtable/{id}',[FinancialtableController::class,'show']);
 Route::post('/financialtable',[FinancialtableController::class,'store']);
 Route::put('/financialtable/{id}',[FinancialtableController::class,'update']);
 Route::delete('/financialtable/{id}',[FinancialtableController::class,'destroy']);
 
+// 反饋
 Route::get('/clubOfFeedback',[CluboffeedbackController::class,'index']);
 Route::get('/clubOfFeedback/{id}',[CluboffeedbackController::class,'show']);
 Route::post('/clubOfFeedback',[CluboffeedbackController::class,'store']);
 Route::put('/clubOfFeedback/{id}',[CluboffeedbackController::class,'update']);
 Route::delete('/clubOfFeedback/{id}',[CluboffeedbackController::class,'destroy']);
 
+// 活動申請
 Route::get('/activityapply',[ClubactivityapplyController::class,'index']);
 Route::get('/activityapply/{id}',[ClubactivityapplyController::class,'show']);
 Route::post('/activityapply',[ClubactivityapplyController::class,'store']);
 Route::put('/activityapply/{id}',[ClubactivityapplyController::class,'update']);
 Route::delete('/activityapply/{id}',[ClubactivityapplyController::class,'destroy']);
 
+// 活動成果
 Route::get('/activityresults',[ClubactivityresultsController::class,'index']);
 Route::get('/activityresults/{id}',[ClubactivityresultsController::class,'showALL']);
 Route::get('/activityresults/{id}/{date}',[ClubactivityresultsController::class,'show']);
@@ -128,3 +138,8 @@ Route::delete('/newattendfile/{id}',[NewsattendfileController::class,'destroy'])
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::get('/overview',[OverviewclubController::class,'index']);
+Route::get('/home',[IndexController::class,'index']);
+Route::get('/myclub/{id}',[MyclubsController::class,'show']);
